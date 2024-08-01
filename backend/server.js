@@ -1,8 +1,8 @@
 require('dotenv').config()
-const app = require('./src/app')
+const application = require('./src/app')
 
 
 
-app.listen(3000, () => {
+application.listen(3000, () => {
     console.log('Server is running on http://localhost:3000')
 })
