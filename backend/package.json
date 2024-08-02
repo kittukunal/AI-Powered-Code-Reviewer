@@ -8,7 +8,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Backend API code for AI Code Reviewer",
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
     "cors": "^2.8.5",
