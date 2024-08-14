@@ -3,26 +3,32 @@ import "prismjs/themes/prism-tomorrow.css"
 import Editor from "react-simple-code-editor"
 import prism from "prismjs"
 import Markdown from "react-markdown"
-import rehypeHighlight from "rehype-highlight";
-import "highlight.js/styles/github-dark.css";
+import rehypeHighlight from "rehype-highlight"
+import "highlight.js/styles/github-dark.css"
 import axios from 'axios'
 import './App.css'
 
 function App() {
-  const [ count, setCount ] = useState(0)
-  const [ code, setCode ] = useState(` function sum() {
+  const [code, setCode] = useState(`function sum() {
   return 1 + 1
 }`)
-
-  const [ review, setReview ] = useState(``)
+  const [review, setReview] = useState("")
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     prism.highlightAll()
   }, [])
 
   async function reviewCode() {
-    const response = await axios.post('http://localhost:3000/ai/get-review', { code })
-    setReview(response.data)
+    setLoading(true)
+    try {
+      const response = await axios.post('http://localhost:3000/ai/get-review', { code })
+      setReview(response.data)
+    } catch (error) {
+      console.error("Error fetching review:", error)
+      setReview("❌ Error fetching code review. Please try again later.")
+    }
+    setLoading(false)
   }
 
   return (
@@ -45,22 +51,23 @@ function App() {
               }}
             />
           </div>
-          <div
+          <button
             onClick={reviewCode}
-            className="review">Review</div>
+            className="review"
+            disabled={loading}
+            style={{ marginTop: '1rem', padding: '10px', fontSize: '16px', cursor: 'pointer' }}
+          >
+            {loading ? "Reviewing..." : "Review"}
+          </button>
         </div>
         <div className="right">
-          <Markdown
-
-            rehypePlugins={[ rehypeHighlight ]}
-
-          >{review}</Markdown>
+          <Markdown rehypePlugins={[rehypeHighlight]}>
+            {review || " The AI review will appear here..."}
+          </Markdown>
         </div>
       </main>
     </>
   )
 }
-
-
 
 export default App
