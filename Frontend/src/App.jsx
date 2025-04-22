@@ -33,6 +33,7 @@ function App() {
 
   return (
     <>
+    <h2 className='header'>AI-Powered Code Reviewer</h2>
       <main>
         <div className="left">
           <div className="code">
@@ -55,7 +56,7 @@ function App() {
             onClick={reviewCode}
             className="review"
             disabled={loading}
-            style={{ marginTop: '1rem', padding: '10px', fontSize: '16px', cursor: 'pointer' }}
+            style={{ marginTop: '1rem', padding: '10px', fontSize: '16px', cursor: 'pointer'}}
           >
             {loading ? "Reviewing..." : "Review"}
           </button>
