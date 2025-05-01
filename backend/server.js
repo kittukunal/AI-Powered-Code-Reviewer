@@ -1,8 +1,15 @@
-require('dotenv').config()
-const application = require('./src/app')
+const express = require("express");
+const cors = require("cors");
+const app = express();
 
+// 🟡 Add these middlewares
+app.use(cors());
+app.use(express.json()); // 🔥 This is required to read req.body
 
+const aiRoutes = require("./src/routes/ai.routes");
+app.use("/", aiRoutes);
 
-application.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000')
-})
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
